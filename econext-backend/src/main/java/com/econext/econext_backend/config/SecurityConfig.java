@@ -12,15 +12,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+// --- CORRECT IMPORT (NOT REACTIVE) ---
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-    private final CustomOidcUserService customOidcUserService;  // Note: this is your OIDC user service, not OAuth2UserService
+    private final CustomOidcUserService customOidcUserService;
 
     public SecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
                           CustomOidcUserService customOidcUserService) {
@@ -31,12 +37,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
+                // This now correctly applies the CORS configuration below
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login/**", "/oauth2/**").permitAll()
+                        // Simplified rules. The CORS config handles OPTIONS requests.
+                        .requestMatchers("/", "/login/**", "/oauth2/**", "/api/footprint/calculate").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(userInfo -> userInfo.oidcUserService(customOidcUserService))  // Use oidcUserService() here
+                        .userInfoEndpoint(userInfo -> userInfo.oidcUserService(customOidcUserService))
                         .successHandler(customAuthenticationSuccessHandler)
                 )
                 .logout(logout -> logout
@@ -58,5 +68,19 @@ public class SecurityConfig {
                 chain.doFilter(request, response);
             }
         };
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        // --- CORRECT CLASS (NOT REACTIVE) ---
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

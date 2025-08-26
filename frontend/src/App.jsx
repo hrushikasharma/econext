@@ -65,14 +65,25 @@ export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('name');
-
-    if (name) {
-      setUser({ name: name });
-      window.history.replaceState({}, document.title, "/");
-    }
+    fetch('http://localhost:8080/api/userinfo', {
+      method: 'GET',
+      credentials: 'include', // Important to send cookies/session
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error('Not authenticated');
+        }
+      })
+      .then((data) => {
+          setUser({ name: data.name }); // Use name, not email
+      })
+      .catch(() => {
+        setUser(null);
+      });
   }, []);
+
 
   const handleLogout = () => {
     setUser(null);

@@ -5,53 +5,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
 @Entity
-@Table(name = "app_users") // Explicitly mapping to your 'users' table
+@Table(name = "app_users") // This MUST match your database table name exactly
 public class User {
 
-    @Id // The email will now be the primary key
-    @Column(nullable = false, unique = true) // Marking it as required and unique
+    @Id
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String name; // Changed from 'username' to 'name'
+    private String name;
 
-    @Column(nullable = true) // Password can be null for Google users
+    @Column(nullable = true)
     private String password;
 
-    private String provider; // To store where the user came from, e.g., "google"
+    private String provider;
 
     // --- Getters & Setters ---
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getProvider() {
-        return provider;
-    }
-
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    public String getProvider() { return provider; }
+    public void setProvider(String provider) { this.provider = provider; }
 }
