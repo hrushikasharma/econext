@@ -20,8 +20,6 @@ public class FootprintService {
     @Autowired
     private UserRepository userRepository;
 
-    // This annotation tells Spring to read the "GEMINI_API_KEY" environment variable
-    // and inject its value into this 'apiKey' field.
     @Value("${GEMINI_API_KEY}")
     private String apiKey;
 

@@ -5,10 +5,17 @@ import React, { useState, useEffect } from 'react';
 import Dashboard from './components/Dashboard';
 import CarbonFootprintForm from './components/CarbonFootprintForm';
 
-// --- LOGIN PAGE COMPONENT (No changes here) ---
+// --- THIS IS THE NEW, IMPORTANT PART ---
+// Once you deploy your backend, replace this placeholder with your real Railway URL
+const API_BASE_URL = "https://your-backend-url.up.railway.app";
+// For local testing, you can use: const API_BASE_URL = "http://localhost:8080";
+
+
+// --- LOGIN PAGE COMPONENT ---
 function LoginPage() {
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    // Use the API_BASE_URL variable
+    window.location.href = `${API_BASE_URL}/oauth2/authorization/google`;
   };
 
   const styles = {
@@ -60,12 +67,13 @@ function LoginPage() {
 }
 
 
-// --- MAIN APP COMPONENT (No changes here) ---
+// --- MAIN APP COMPONENT ---
 export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/userinfo', {
+    // Use the API_BASE_URL variable
+    fetch(`${API_BASE_URL}/api/userinfo`, {
       method: 'GET',
       credentials: 'include', // Important to send cookies/session
     })

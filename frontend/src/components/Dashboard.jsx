@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Dashboard.css'; // This links to the CSS file below
-
+const API_URL = 'http://localhost:8080';
 // --- CarbonFootprintForm Component ---
 const CarbonFootprintForm = ({ onBack, onCalculationSuccess }) => {
   const [formData, setFormData] = useState({
@@ -15,7 +15,7 @@ const CarbonFootprintForm = ({ onBack, onCalculationSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/footprint/calculate', {
+      const response = await fetch(`${API_URL}/api/footprint/latest`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -111,7 +111,7 @@ export default function Dashboard({ name, onLogout }) {
 
     const fetchLatestScore = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/footprint/latest', { credentials: 'include' });
+            const response = await fetch(`${API_URL}/api/footprint/latest`, { credentials: 'include' });
             if (response.ok) {
                 const data = await response.json();
                 if (data.latestScore) setLatestLog(data);
@@ -148,7 +148,7 @@ export default function Dashboard({ name, onLogout }) {
         setIsTipsLoading(true);
         setShowTipsModal(true);
         try {
-            const response = await fetch('http://localhost:8080/api/footprint/tips', { credentials: 'include' });
+            const response = await fetch(`${API_URL}api/footprint/tips`, { credentials: 'include' });
             const data = await response.json();
             setTipsContent(response.ok ? data.tips : (data.message || 'Could not fetch tips.'));
         } catch (error) {

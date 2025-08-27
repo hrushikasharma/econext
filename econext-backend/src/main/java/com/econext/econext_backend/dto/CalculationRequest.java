@@ -8,8 +8,6 @@ public class CalculationRequest {
     private String energyType;
     private double meatMealsPerWeek;
 
-    // --- Getters and Setters for all fields ---
-    // (You can generate these automatically in your IDE)
 
     public double getDrivingKmPerWeek() { return drivingKmPerWeek; }
     public void setDrivingKmPerWeek(double drivingKmPerWeek) { this.drivingKmPerWeek = drivingKmPerWeek; }
