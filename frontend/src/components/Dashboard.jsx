@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './Dashboard.css'; // This links to the CSS file below
-const API_URL = 'http://localhost:8080';
-// --- CarbonFootprintForm Component ---
+import './Dashboard.css';
+const API_URL = 'https://aware-upliftment.up.railway.app';
 const CarbonFootprintForm = ({ onBack, onCalculationSuccess }) => {
   const [formData, setFormData] = useState({
     drivingKmPerWeek: '',
