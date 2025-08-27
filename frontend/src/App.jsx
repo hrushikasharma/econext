@@ -7,7 +7,7 @@ import CarbonFootprintForm from './components/CarbonFootprintForm';
 
 // --- THIS IS THE NEW, IMPORTANT PART ---
 // Once you deploy your backend, replace this placeholder with your real Railway URL
-const API_BASE_URL = "https://aware-upliftment.up.railway.app";
+const API_BASE_URL = "econext-production.up.railway.app";
 // For local testing, you can use: const API_BASE_URL = "http://localhost:8080";
 
 
