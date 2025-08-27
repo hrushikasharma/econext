@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const API_BASE_URL = "econext-production.up.railway.app";
+const API_BASE_URL = "https://econext-production.up.railway.app";
 
 const colors = {
   green: '#047857',
