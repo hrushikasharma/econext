@@ -5,10 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Dashboard from './components/Dashboard';
 import CarbonFootprintForm from './components/CarbonFootprintForm';
 
-// --- THIS IS THE NEW, IMPORTANT PART ---
-// Once you deploy your backend, replace this placeholder with your real Railway URL
-const API_BASE_URL = "econext-production.up.railway.app";
-// For local testing, you can use: const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "https://econext-production.up.railway.app";
 
 
 // --- LOGIN PAGE COMPONENT ---
