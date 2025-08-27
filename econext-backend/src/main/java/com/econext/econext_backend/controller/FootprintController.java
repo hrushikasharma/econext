@@ -54,4 +54,20 @@ public class FootprintController {
             return ResponseEntity.ok(Map.of("message", "No score calculated yet."));
         }
     }
+    // In your FootprintController.java file
+
+    @GetMapping("/tips")
+    public ResponseEntity<?> getGreenTips(@AuthenticationPrincipal OidcUser principal) {
+        if (principal == null || principal.getEmail() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "User not authenticated"));
+        }
+        String email = principal.getEmail();
+        try {
+            String tips = footprintService.getPersonalizedTips(email);
+            return ResponseEntity.ok(Map.of("tips", tips));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
+        }
+    }
+
 }

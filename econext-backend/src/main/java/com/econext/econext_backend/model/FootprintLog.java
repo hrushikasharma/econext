@@ -17,42 +17,34 @@ public class FootprintLog {
     @Column(name = "log_date", nullable = false)
     private LocalDate logDate;
 
-    @ManyToOne(fetch = FetchType.LAZY) // Using LAZY fetch is more efficient
-    // This is the corrected part. It ensures the foreign key column is named correctly.
+    // --- NEW COLUMNS TO STORE USER INPUTS ---
+    private Double drivingKmPerWeek;
+    private Double annualFlights;
+    private String energyType;
+    private Double meatMealsPerWeek;
+    // --- END OF NEW COLUMNS ---
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_email", referencedColumnName = "email", nullable = false)
     private User user;
 
-    // --- Getters and Setters ---
+    // --- Add Getters and Setters for the new fields ---
+    public Double getDrivingKmPerWeek() { return drivingKmPerWeek; }
+    public void setDrivingKmPerWeek(Double drivingKmPerWeek) { this.drivingKmPerWeek = drivingKmPerWeek; }
+    public Double getAnnualFlights() { return annualFlights; }
+    public void setAnnualFlights(Double annualFlights) { this.annualFlights = annualFlights; }
+    public String getEnergyType() { return energyType; }
+    public void setEnergyType(String energyType) { this.energyType = energyType; }
+    public Double getMeatMealsPerWeek() { return meatMealsPerWeek; }
+    public void setMeatMealsPerWeek(Double meatMealsPerWeek) { this.meatMealsPerWeek = meatMealsPerWeek; }
 
-    public Long getLogId() {
-        return logId;
-    }
-
-    public void setLogId(Long logId) {
-        this.logId = logId;
-    }
-
-    public Double getFootprintValueKg() {
-        return footprintValueKg;
-    }
-
-    public void setFootprintValueKg(Double footprintValueKg) {
-        this.footprintValueKg = footprintValueKg;
-    }
-
-    public LocalDate getLogDate() {
-        return logDate;
-    }
-
-    public void setLogDate(LocalDate logDate) {
-        this.logDate = logDate;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+    // Existing getters and setters...
+    public Long getLogId() { return logId; }
+    public void setLogId(Long logId) { this.logId = logId; }
+    public Double getFootprintValueKg() { return footprintValueKg; }
+    public void setFootprintValueKg(Double footprintValueKg) { this.footprintValueKg = footprintValueKg; }
+    public LocalDate getLogDate() { return logDate; }
+    public void setLogDate(LocalDate logDate) { this.logDate = logDate; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 }
